@@ -1,7 +1,7 @@
 const menu = ["Iced Coffee", "Cafe Latte", "Chocolate Cake", "Cheese Bread"];
 const prices = [120, 130, 100, 60];
 const customer = { name: "Jane", age: 20, budget: 500 };
-const shop = { name: "Jane's Coffee Shop", location: "Calbayog City" };
+const shop = { name: "Janeyy's Coffee Shop", location: "Calbayog City" };
 const orders = [
     { name: "Iced Coffee", price: 120, category: "Coffee" },
     { name: "Cafe Latte", price: 130, category: "Coffee" },
