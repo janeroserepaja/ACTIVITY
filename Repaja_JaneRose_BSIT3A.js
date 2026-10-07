@@ -1,7 +1,24 @@
-const menu = ["Iced Coffee", "Cafe Latte", "Chocolate Cake", "Cheese Bread"];
+```javascript
+const menu = [
+    "Iced Coffee",
+    "Cafe Latte",
+    "Chocolate Cake",
+    "Cheese Bread"
+];
+
 const prices = [120, 130, 100, 60];
-const customer = { name: "Jane", age: 20, budget: 500 };
-const shop = { name: "Janeyy's Coffee Shop", location: "Calbayog City" };
+
+const customer = {
+    name: "Jane",
+    age: 20,
+    budget: 500
+};
+
+const shop = {
+    name: "Janeyy's Coffee Shop",
+    location: "Calbayog City"
+};
+
 const orders = [
     { name: "Iced Coffee", price: 120, category: "Coffee" },
     { name: "Cafe Latte", price: 130, category: "Coffee" },
@@ -15,9 +32,26 @@ const calculateDiscount = amount => amount * 0.10;
 const formatPrice = amount => `₱${amount.toFixed(2)}`;
 const greetCustomer = name => `Thank you for ordering, ${name}!`;
 
+const createOrderSummary = (item, quantity, price) => {
+    const subtotal = calculateTotal(price, quantity);
+    const tax = calculateTax(subtotal);
+    const discount = calculateDiscount(subtotal);
+    const total = subtotal + tax - discount;
+
+    return {
+        item,
+        quantity,
+        subtotal,
+        tax,
+        discount,
+        total
+    };
+};
+
 let [firstItem, secondItem, thirdItem] = menu;
 let [firstPrice, secondPrice, thirdPrice] = prices;
 let [firstOrder, secondOrder, thirdOrder] = orders;
+
 let total = [...menu];
 
 ({ name: firstItem } = customer);
@@ -40,29 +74,51 @@ orders.filter(function(item) {
     return item.price >= 100;
 });
 
-firstOrder = { name: customer?.name, ...customer };
-secondOrder = { location: shop?.location, ...shop };
+firstOrder = {
+    name: customer?.name,
+    ...customer
+};
+
+secondOrder = {
+    location: shop?.location,
+    ...shop
+};
 
 total = [...prices];
-total = calculateTotal(firstPrice, 2);
+
+const order = createOrderSummary("Iced Coffee", 2, firstPrice);
 
 console.log("");
 console.log(`| ${shop.name.toUpperCase()} |`);
 console.log("");
+
 console.log(`Customer: ${customer.name}`);
 console.log(`Order Status: Preparing`);
+
 console.log("");
 console.log(`| ORDER |`);
 console.log("");
-console.log(`${orders[0].name}      x2    ${formatPrice(total)}`);
+
+console.log(
+    `${order.item}      x${order.quantity}    ${formatPrice(order.subtotal)}`
+);
+
 console.log("");
-console.log(`Subtotal:              ${formatPrice(total)}`);
-console.log(`Tax:                    ${formatPrice(calculateTax(total))}`);
-console.log(`Discount:               ${formatPrice(calculateDiscount(total))}`);
-console.log(`Total:                 ${formatPrice(total + calculateTax(total) - calculateDiscount(total))}`);
+
+console.log(`Subtotal:              ${formatPrice(order.subtotal)}`);
+console.log(`Tax:                   ${formatPrice(order.tax)}`);
+console.log(`Discount:              ${formatPrice(order.discount)}`);
+console.log(`Total:                 ${formatPrice(order.total)}`);
+
 console.log("");
+
 console.log(`Budget:                ${formatPrice(customer.budget)}`);
-console.log(`Change:                ${formatPrice(customer.budget - (total + calculateTax(total) - calculateDiscount(total)))}`);
+console.log(
+    `Change:                ${formatPrice(customer.budget - order.total)}`
+);
+
 console.log("");
+
 console.log(greetCustomer(customer.name));
 console.log(`Have a great day at ${shop.name}!`);
+```
